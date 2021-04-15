@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
-  }
+  },
+  {
+    path: 'total',
+    loadChildren: () => import('../total/total.module').then( m => m.TotalPageModule)
+  },
 ];
 
 @NgModule({

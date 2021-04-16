@@ -25,7 +25,7 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit(): void {
     //reactive forms
-    this.itemForm =  this.formBuilder.group({
+    this.itemForm = this.formBuilder.group({
       itemName: ['onion', [Validators.required]],
       quantity: [5, [Validators.required]],
       uom: ['kg', [Validators.required]],
@@ -33,9 +33,6 @@ export class AddItemComponent implements OnInit {
     });
   }
   addItem() {
-    //  console.log(this.itemForm.value);
-    // if(this.checkDuplicateItems(itemName))
-    //  {this.service.add(this.itemForm.value);}
     const itemName = this.itemForm.value.itemName;
 
     if (this.checkDuplicateItems(itemName)) {
@@ -56,6 +53,7 @@ export class AddItemComponent implements OnInit {
       return false;
     }
   }
+
   //to display toast
   displayToast() {
     this.toastController.create({

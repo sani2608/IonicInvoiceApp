@@ -7,15 +7,13 @@ import { Tab2Page } from './tab2.page';
 import { AddItemComponentModule } from '../addItem/add-item.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
-import { CheckoutComponent } from '../checkout/checkout.component';
-import { CheckoutModule } from '../checkout/checkout.module';
+
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    CheckoutModule,
     Tab2PageRoutingModule,
   ],
   declarations: [Tab2Page]

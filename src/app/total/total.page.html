@@ -20,8 +20,8 @@
 </ion-header> -->
 
 <ion-content [fullscreen]="true">
-  <div class="cart-items" >
-    <ion-card mode="ios" *ngFor="let item of s">
+  <div class="cart-items">
+    <ion-card mode="ios" *ngFor="let item of itemList; let i = index">
       <ion-card-content>
         <div class="item-img">
           <img
@@ -31,36 +31,40 @@
 
         <div class="item-info">
           <p>{{item.itemName}}</p>
-          <p>{{item.quantity}}</p>
+          <!-- <p>{{item.quantity}}</p> -->
           <p>{{item.uom}}</p>
-          <p>{{item.price}}</p>
+          <p>{{item.price * item.quantity}}</p>
 
           <div class="qty-selector">
-            <ion-button fill="clear">-</ion-button>
-            <ion-label>1</ion-label>
-            <ion-button fill="clear">+</ion-button>
+            <ion-button fill="clear" (click)="decreaseItemQuantity(i)"
+              >-</ion-button
+            >
+            <ion-label>{{item.quantity}}</ion-label>
+            <ion-button fill="clear" (click)="increaseItemQuantity(i)"
+              >+</ion-button
+            >
           </div>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <div class="address">
-    <ion-item lines="none">
-      Bangalore India
-      <ion-badge slot="end">&nbsp;</ion-badge>
-    </ion-item>
-  </div>
+    <div align="center" *ngIf="isEmpty()">Your Cart is empty. Add Items</div>
 
-  <hr />
+    <div class="address" >
+      <ion-item lines="none">
+        Bangalore India
+      </ion-item>
+    </div>
 
-  <div class="cart-total">
-    <ion-item lines="none">
-      <ion-label>Total</ion-label>
-      <ion-label slot="end" class="ion-text-right">$162.00</ion-label>
-    </ion-item>
-  </div>
+    <hr />
 
+    <div class="cart-total">
+      <ion-item lines="none">
+        <ion-label>Total</ion-label>
+        <ion-label slot="end" class="ion-text-right">₹ {{ totalCartValue()}}/-</ion-label>
+      </ion-item>
+    </div>
 
 </ion-content>
 <ion-footer translucent="true" class="ion-no-border" mode="md">

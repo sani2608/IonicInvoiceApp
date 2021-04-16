@@ -13,11 +13,6 @@ export class ItemService {
   //function to add item
   add(item: Item){
     this.items.push(item);
-    console.log('from service items list', this.items);
+    // console.log('from service items list', this.items);
   }
-  // function to update the item quantity
-  updateItem(){
-
-  }
-
 }

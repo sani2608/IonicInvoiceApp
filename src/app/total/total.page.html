@@ -4,20 +4,6 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-buttons class="backbtn" routerLink="/home" routerDirection="back">
-      </ion-buttons>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button class="notification">
-        <ion-icon name="notifications-outline" color="dark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> -->
 
 <ion-content [fullscreen]="true">
   <div class="cart-items">
@@ -51,11 +37,7 @@
 
     <div align="center" *ngIf="isEmpty()">Your Cart is empty. Add Items</div>
 
-    <div class="address" >
-      <ion-item lines="none">
-        Bangalore India
-      </ion-item>
-    </div>
+
 
     <hr />
 
@@ -67,14 +49,14 @@
     </div>
 
 </ion-content>
-<ion-footer translucent="true" class="ion-no-border" mode="md">
+
+<!-- <ion-footer translucent="true" class="ion-no-border" mode="md">
   <ion-toolbar color="translucent">
     <ion-button
       expand="block"
       class="main-button"
       routerLink="/tabs"
-      routerDirection="forward"
-      >Buy</ion-button
+    >Buy</ion-button
     >
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

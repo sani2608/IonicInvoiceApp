@@ -28,7 +28,7 @@
     </ion-row>
   </ion-grid>
 </ion-content> -->
-<ion-content fullscreen="true">
+<!-- <ion-content fullscreen="true" class="no-scroll">
   <div class="cart-items" >
     <ion-card mode="ios" *ngFor="let item of s">
       <ion-card-content>
@@ -76,6 +76,62 @@
       expand="block"
       class="main-button"
       routerLink="/confirm"
+      routerDirection="forward"
+      >Buy</ion-button
+    >
+  </ion-toolbar>
+</ion-footer> -->
+
+<ion-content [fullscreen]="true">
+  <div class="cart-items" >
+    <ion-card mode="ios" *ngFor="let item of s">
+      <ion-card-content>
+        <div class="item-img">
+          <img
+            src="https://www.rd.com/wp-content/uploads/2018/06/Broccoli-e1528208507588-760x506.jpg"
+          />
+        </div>
+
+        <div class="item-info">
+          <p>{{item.itemName}}</p>
+          <p>{{item.quantity}}</p>
+          <p>{{item.uom}}</p>
+          <p>{{item.price}}</p>
+
+          <div class="qty-selector">
+            <ion-button fill="clear">-</ion-button>
+            <ion-label>1</ion-label>
+            <ion-button fill="clear">+</ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="address">
+    <ion-item lines="none">
+      Bangalore India
+      <ion-badge slot="end">&nbsp;</ion-badge>
+    </ion-item>
+  </div>
+
+  <hr />
+
+  <div class="cart-total">
+    <ion-item lines="none">
+      <ion-label>Total</ion-label>
+      <ion-label slot="end" class="ion-text-right">$162.00</ion-label>
+    </ion-item>
+  </div>
+
+
+</ion-content>
+<ion-footer translucent="true" class="ion-no-border" mode="md">
+  <ion-toolbar color="translucent">
+    <ion-button
+      expand="block"
+      class="main-button"
+      routerLink="/tabs"
       routerDirection="forward"
       >Buy</ion-button
     >

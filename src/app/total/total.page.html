@@ -19,7 +19,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content fullscreen="true">
+<ion-content [fullscreen]="true">
   <div class="cart-items" >
     <ion-card mode="ios" *ngFor="let item of s">
       <ion-card-content>
@@ -61,6 +61,8 @@
     </ion-item>
   </div>
 
+
+</ion-content>
 <ion-footer translucent="true" class="ion-no-border" mode="md">
   <ion-toolbar color="translucent">
     <ion-button
@@ -72,4 +74,3 @@
     >
   </ion-toolbar>
 </ion-footer>
-</ion-content>

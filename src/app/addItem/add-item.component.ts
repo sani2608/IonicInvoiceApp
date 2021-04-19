@@ -9,45 +9,37 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./add-item.component.scss'],
 })
 export class AddItemComponent implements OnInit {
-  @Input() name: string;
-  itemForm: FormGroup;
-  isItemPresent = false;
-  isEmpt = false;
+  // @Input() name: string;
+  //if I make this private then how can I access it template?
+  public itemForm: FormGroup;
+  // isItemPresent = false;
+  //isEmpt = false;
   private message: string;
 
 
   constructor(
     private service: ItemService,
     private formBuilder: FormBuilder,
-    public toastController: ToastController
+    private toastController: ToastController
 
-  ) { }
+  ) {
+    console.log('constructor additem');
+  }
 
   ngOnInit(): void {
     //reactive forms
     this.itemForm = this.formBuilder.group({
-      itemName: ['onion', [Validators.required]],
+      name: ['onion', [Validators.required]],
       quantity: [5, [Validators.required]],
       uom: ['kg', [Validators.required]],
       price: [50, [Validators.required]]
     });
+    console.log('ngOnInit add item');
   }
 
-
+  //function to add new Item to cart.
   addItem() {
-    //const itemName = this.itemForm.value.itemName;
-    //if (this.checkDuplicateItems(itemName)) {
-      // console.log('item already exists in the cart..');
-     // this.message = 'Item already added, goto cart section';
-      //this.displayToast();
-      //this.isItemPresent = true;
-    //}
-    //else {
-     // this.message= 'Item Added Successfully.';
-      //this.displayToast();
-      //this.service.nameOfItems.push(itemName);
       this.service.add(this.itemForm.value);
-    //}
   }
   /***
   //check if item is already present in cart
@@ -61,14 +53,14 @@ export class AddItemComponent implements OnInit {
   */
 
   //to display toast
-  displayToast() {
-    this.toastController.create({
-      message: this.message,
-      position: 'top',
-      duration: 1500,
-      color: 'primary'
-    }).then((toast) => {
-      toast.present();
-    });
-  }
+  // displayToast() {
+  //   this.toastController.create({
+  //     message: this.message,
+  //     position: 'top',
+  //     duration: 1500,
+  //     color: 'primary'
+  //   }).then((toast) => {
+  //     toast.present();
+  //   });
+  // }
 }

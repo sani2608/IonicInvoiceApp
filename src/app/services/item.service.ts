@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Item } from '../models/item';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ItemService {
   // FIXME: Avoid using 'public'
@@ -13,26 +13,30 @@ export class ItemService {
 
   private items: Array<Item> = [];
 
-  constructor() { }
+  constructor() {}
   //function to add item
-  add(item: Item) {
-    // this.items.push(item);
-    // console.log('from service items list', this.items);
-    const itemData = new Item(
-      item.itemName,
-      item.itemQuantity,
-      item.itemUom,
-      item.itemPrice
+  add(item: any) { //what type should I put for item?
+    //console.log(item);
+    const newItemData = new Item(
+      item.name,
+      item.quantity,
+      item.uom,
+      item.price
     );
-    // itemData.itemName = item.itemName;
-    // itemData.itemQuantity = item.quantity;
-    // itemData.itemUom = item.uom;
-    // itemData.itemPrice = item.price;
-    // console.log(itemData.itemName);
-    this.items.push(itemData);
-    console.log('got from add item component -\n');
-    console.log(item.itemName,item.itemQuantity,item.itemUom,item.itemPrice);
-    console.log('got value from itemlist from service -', this.items);
+    //push the new item Object to items array in the service
+    this.items.push(newItemData);
+    //!note:- we can use getters and setters without braces in js.
+    console.log(
+      'using getters to get the values - \n',
+      newItemData.itemName,
+      newItemData.itemQuantity,
+      newItemData.itemUom,
+      newItemData.itemPrice,
+      newItemData.itemTotalPrice
+    );
+    //check the items in array
+    console.log('got value from itemlist from service -\n', this.items);
+
   }
   /***
     search(itemName: string) {

@@ -5,7 +5,7 @@ ionic invoice app with angular
 To run the project clone the project and change the directory 
 #run the following command
 ###
-npm install && ionic serve -o
+npm install && ionic serve
 ###
 1. We can add items in cart. Until all the details are filled the add button will be disabled.
 2. If we try to add same item it will show error in toast bar on top.

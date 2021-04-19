@@ -31,6 +31,7 @@ export class TotalPage implements OnInit {
       this.service.items[index].quantity = value;
     }
   }
+    // FIXME: Move this function to a service.
      //*this is to check if the cart is empty. if empty it will show
     //* message to add items to cart
     isEmpty(): boolean{

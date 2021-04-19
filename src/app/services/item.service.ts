@@ -5,8 +5,10 @@ import { Item } from '../models/item';
   providedIn: 'root'
 })
 export class ItemService {
+  // FIXME: Avoid using 'public'
   public items: Array<Item>=[];
    //Array of Strings to store the itemName;
+   // FIXME: Avoid using extra variables to hold the state information.
    nameOfItems: Array<string> = [];
 
   constructor() { }
@@ -14,5 +16,11 @@ export class ItemService {
   add(item: Item){
     this.items.push(item);
     // console.log('from service items list', this.items);
+  }
+
+  search(itemName: string) {
+    this.items.filter( (value, index, array) => {
+      // FIXME: Implement the search
+    })
   }
 }

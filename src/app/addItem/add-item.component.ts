@@ -32,21 +32,24 @@ export class AddItemComponent implements OnInit {
       price: [50, [Validators.required]]
     });
   }
-  addItem() {
-    const itemName = this.itemForm.value.itemName;
 
-    if (this.checkDuplicateItems(itemName)) {
+
+  addItem() {
+    //const itemName = this.itemForm.value.itemName;
+    //if (this.checkDuplicateItems(itemName)) {
       // console.log('item already exists in the cart..');
-      this.message = 'Item already added, goto cart section';
-      this.displayToast();
-      this.isItemPresent = true;
-    } else {
-      this.message= 'Item Added Successfully.';
-      this.displayToast();
-      this.service.nameOfItems.push(itemName);
+     // this.message = 'Item already added, goto cart section';
+      //this.displayToast();
+      //this.isItemPresent = true;
+    //}
+    //else {
+     // this.message= 'Item Added Successfully.';
+      //this.displayToast();
+      //this.service.nameOfItems.push(itemName);
       this.service.add(this.itemForm.value);
-    }
+    //}
   }
+  /***
   //check if item is already present in cart
   checkDuplicateItems(item): boolean {
     if (this.service.nameOfItems.includes(item)) {
@@ -55,6 +58,7 @@ export class AddItemComponent implements OnInit {
       return false;
     }
   }
+  */
 
   //to display toast
   displayToast() {

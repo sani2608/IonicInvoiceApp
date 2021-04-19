@@ -14,8 +14,9 @@ export class TotalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.itemList = this.service.items; //*get the list of items from the service
+    //this.itemList = this.service.items; //*get the list of items from the service
   }
+  /*
   //*will increase the quantity of the item
   increaseItemQuantity(index: number) {
     const value = Number(this.itemList[index].quantity) + 1;
@@ -31,7 +32,7 @@ export class TotalPage implements OnInit {
       this.service.items[index].quantity = value;
     }
   }
-    // FIXME: Move this function to a service.
+     FIXME: Move this function to a service.
      //*this is to check if the cart is empty. if empty it will show
     //* message to add items to cart
     isEmpty(): boolean{
@@ -49,5 +50,5 @@ export class TotalPage implements OnInit {
         ), initialValue);
       return sum;
     }
-
+*/
 }

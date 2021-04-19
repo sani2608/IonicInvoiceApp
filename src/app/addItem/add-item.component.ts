@@ -41,6 +41,8 @@ export class AddItemComponent implements OnInit {
       this.displayToast();
       this.isItemPresent = true;
     } else {
+      this.message= 'Item Added Successfully.';
+      this.displayToast();
       this.service.nameOfItems.push(itemName);
       this.service.add(this.itemForm.value);
     }
@@ -59,16 +61,8 @@ export class AddItemComponent implements OnInit {
     this.toastController.create({
       message: this.message,
       position: 'top',
-      buttons: [
-        {
-          side: 'end',
-          text: 'Close',
-          role: 'cancel',
-          handler: () => {
-            console.log('');
-          }
-        }
-      ]
+      duration: 1500,
+      color: 'primary'
     }).then((toast) => {
       toast.present();
     });

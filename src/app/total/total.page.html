@@ -16,16 +16,15 @@
 
         <div class="item-info">
           <p>{{item.itemName}}</p>
-          <!-- <p>{{item.quantity}}</p> -->
-          <p>{{item.uom}}</p>
-          <p>{{item.price}}</p>
-          <p>{{item.totalPrice}}</p>
+          <p>{{item.itemUom}}</p>
+          <p>{{item.itemPrice}}</p>
+          <p>{{item.itemTotalPrice}}</p>
 
           <div class="qty-selector">
             <ion-button fill="clear" (click)="decreaseQuantity(i)"
               >-</ion-button
             >
-            <ion-label>{{item.quantity}}</ion-label>
+            <ion-label>{{item.itemQuantity}}</ion-label>
             <ion-button fill="clear" (click)="increaseQuantity(i)"
               >+</ion-button
             >
@@ -35,7 +34,7 @@
     </ion-card>
   </div>
 
-  <!-- <div align="center" *ngIf="isEmpty()">Your Cart is empty. Add Items</div> -->
+  <div align="center" *ngIf="isCartEmpty()">Your Cart is empty. Add Items</div>
 
   <hr />
 
@@ -43,7 +42,7 @@
     <ion-item lines="none">
       <ion-label>Total</ion-label>
       <ion-label slot="end" class="ion-text-right"
-        >₹ {{cartValue}}/-</ion-label
+        >₹ {{ cartValue}}/-</ion-label
       >
     </ion-item>
   </div>

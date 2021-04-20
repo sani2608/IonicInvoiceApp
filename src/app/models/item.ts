@@ -21,13 +21,10 @@ export class Item {
   private uom: string;
   private price: number;
   private totalPrice: number;
-  constructor(quantity: number, price: number) {
-    this.totalPrice = quantity * price;
+  constructor() {
     //(name: string, quantity: number, uom: string, price: number,totalPrice: number)
-    // this.name = name;
-    // this.quantity = quantity;
-    // this.uom = uom;
-    // this.price = price;
+
+    // this.totalPrice = this.quantity * this.price;
     // this.totalPrice =totalPrice;
   }
 

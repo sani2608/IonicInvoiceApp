@@ -23,7 +23,7 @@ export class AddItemComponent implements OnInit {
     // private toastController: ToastController
 
   ) { }
-
+  //TODO show message on adding duplicate items
   ngOnInit(): void {
     //reactive forms
     this.itemForm = this.formBuilder.group({

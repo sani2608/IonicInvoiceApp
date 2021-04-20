@@ -13,23 +13,25 @@ export class ItemService {
   // // nameOfItems: Array<string> = [];
 
   private items: Array<Item> = [];
-  private userDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject([]);
+  private userDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject(
+    []
+  );
   private userData$ = this.userDataSource.asObservable();
-  private totalCartPrice: number;
-  constructor() { }
-
+  // private totalCartValue: number;
+  constructor() {}
 
   updateUserData(data) {
     this.userDataSource.next(data);
   }
   addData(newItem) {
     //create a new object
-    const newItemData = new Item(newItem.quantity, newItem.price);
+    const newItemData = new Item();
+    // newItem.quantity, newItem.price,newItem.uom,newItem.name
     newItemData.itemName = newItem.name;
     newItemData.itemQuantity = newItem.quantity;
     newItemData.itemUom = newItem.uom;
     newItemData.itemPrice = newItem.price;
-    // console.log(newItemData);
+    console.log(typeof newItemData.itemTotalPrice);
     const currentValue = this.userDataSource.value;
     const updatedValue = [...currentValue, newItemData];
     this.userDataSource.next(updatedValue);
@@ -49,33 +51,13 @@ export class ItemService {
     //   item.price,
     //   item.totalPrice
     // );
-    // const newItemData = new Item();
-    // newItemData.itemName =item.name;
-    // newItemData.itemQuantity =item.quantity;
-    // newItemData.itemUom =item.uom;
-    // newItemData.itemPrice =item.price;
-    // const total = newItemData.itemTotalPrice;
-
-
-
-    //push the new item Object to items array in the service
-    // const totalPrice = newItemData.itemTotalPrice;
-    // this.items.push(newItemData);
-    // this.totalCartPrice = this.totalCartValue();
-    //check the items in array
-    //console.log('got value from itemlist from service -\n', this.items);
   }
   //function to calculate total cart value
-  totalCartValue(): any {
-    // let sum = 0;
-    // for (const x of this.items) {
-    //   sum += x.itemTotalPrice;
-    // }
-    // return sum;
-  }
-  get totalPrice() {
-    return this.totalCartPrice;
-  }
+//TODO add total cart value
+  // get totalPrice(): number {
+  //   this.totalCartValue = 100;
+  //   return this.totalCartValue;
+  // }
   //getter all the items in the list
   get itemsList() {
     return this.items;
@@ -92,30 +74,30 @@ export class ItemService {
     }
   }
 
-
   increaseItemQuantity(i: number) {
     console.log(this.userDataSource.value[i]);
     this.userDataSource.value[i].itemQuantity += 1;
   }
   decreaseItemQuantity(i: number) {
-    const value = this.userDataSource.value[i].itemQuantity -= 1;
+    const value = (this.userDataSource.value[i].itemQuantity -= 1);
     if (value === 0) {
       //if the value becomes zero delete from the items list
       this.userDataSource.value.splice(i, 1);
     }
     console.log(this.userDataSource.value[i]);
-
   }
   //check if itemsList is empty
-  isEmpty() {
-
+  isEmpty(): boolean {
+    if (this.userDataSource.value.length === 0) {
+      console.log('cart is empty');
+      return true;
+    }
   }
-
   //search for item
   search(itemName: string) {
     this.items.filter((value, index, array) => {
       // FIXME: Implement the search
+      //TODO search functionality
     });
   }
-
 }

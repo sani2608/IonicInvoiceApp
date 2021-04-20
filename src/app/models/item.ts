@@ -21,14 +21,17 @@ export class Item {
   private uom: string;
   private price: number;
   private totalPrice: number;
-  constructor(name: string, quantity: number, uom: string, price: number) {
-    this.name = name;
-    this.quantity = quantity;
-    this.uom = uom;
-    this.price = price;
+  constructor(quantity: number, price: number) {
+    this.totalPrice = quantity * price;
+    //(name: string, quantity: number, uom: string, price: number,totalPrice: number)
+    // this.name = name;
+    // this.quantity = quantity;
+    // this.uom = uom;
+    // this.price = price;
+    // this.totalPrice =totalPrice;
   }
 
-  get itemName(): string { //should I give return type for getters?
+  get itemName(): string {
     return this.name;
   }
   set itemName(name: string) {
@@ -41,7 +44,7 @@ export class Item {
   set itemQuantity(quantity: number) {
     this.quantity = quantity;
     // if the quantity is changed recalculate the price
-    this.totalPrice = this.quantity * this.price; //should I add this line here?
+    this.totalPrice = this.quantity * this.price;
   }
 
   get itemUom(): string {
@@ -57,7 +60,7 @@ export class Item {
   set itemPrice(price: number) {
     this.price = price;
     //if the price is changed recalculate the price
-    this.totalPrice = this.quantity * this.price; //should I add this line here?
+    this.totalPrice = this.quantity * this.price;
   }
 
   get itemTotalPrice(): number {

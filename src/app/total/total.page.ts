@@ -1,4 +1,6 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../models/item';
 import { ItemService } from '../services/item.service';
 
@@ -8,14 +10,24 @@ import { ItemService } from '../services/item.service';
   styleUrls: ['./total.page.scss'],
 })
 export class TotalPage implements OnInit {
-  public itemList: Array<Item> = [];
+  //itemList stores all the items;
+  public itemList: Array<Item>;
   constructor(
-    private service: ItemService
+    private service: ItemService,
   ) { }
 
   ngOnInit() {
-    //this.itemList = this.service.items; //*get the list of items from the service
+    this.service.userdata.subscribe(data => this.itemList = data);
+    // console.log(this.itemList);
   }
+
+  increaseQuantity(i: number) {
+    this.service.increaseItemQuantity(i);
+  }
+  decreaseQuantity(i: number) {
+    this.service.decreaseItemQuantity(i);
+  }
+
   /*
   //*will increase the quantity of the item
   increaseItemQuantity(index: number) {

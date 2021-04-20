@@ -20,11 +20,9 @@ export class AddItemComponent implements OnInit {
   constructor(
     private service: ItemService,
     private formBuilder: FormBuilder,
-    private toastController: ToastController
+    // private toastController: ToastController
 
-  ) {
-    console.log('constructor additem');
-  }
+  ) {}
 
   ngOnInit(): void {
     //reactive forms
@@ -34,23 +32,17 @@ export class AddItemComponent implements OnInit {
       uom: ['kg', [Validators.required]],
       price: [50, [Validators.required]]
     });
-    console.log('ngOnInit add item');
   }
 
   //function to add new Item to cart.
+  // addItem() {
+  //     this.service.add(this.itemForm.value);
+  // }
   addItem() {
-      this.service.add(this.itemForm.value);
-  }
-  /***
-  //check if item is already present in cart
-  checkDuplicateItems(item): boolean {
-    if (this.service.nameOfItems.includes(item)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  */
+    this.service.addData(this.itemForm.value);
+}
+
+
 
   //to display toast
   // displayToast() {

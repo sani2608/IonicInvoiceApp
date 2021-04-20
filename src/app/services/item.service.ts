@@ -23,18 +23,19 @@ export class ItemService {
     this.userDataSource.next(data);
   }
   addData(newItem) {
+    //create a new object
     const newItemData = new Item(newItem.quantity, newItem.price);
-    newItemData.itemName =newItem.name;
-    newItemData.itemQuantity =newItem.quantity;
-    newItemData.itemUom =newItem.uom;
-    newItemData.itemPrice =newItem.price;
+    newItemData.itemName = newItem.name;
+    newItemData.itemQuantity = newItem.quantity;
+    newItemData.itemUom = newItem.uom;
+    newItemData.itemPrice = newItem.price;
     // console.log(newItemData);
     const currentValue = this.userDataSource.value;
     const updatedValue = [...currentValue, newItemData];
     this.userDataSource.next(updatedValue);
-    console.log('userDataSource - \n',this.userDataSource.value);
+    console.log('userDataSource - \n', this.userDataSource.value);
   }
-  get userdata(){
+  get userdata() {
     return this.userData$;
   }
 
@@ -81,8 +82,10 @@ export class ItemService {
   }
 
   //check if item is already present in cart
-  checkDuplicateItems(item): boolean {
-    if (this.itemsList.includes(item.itemName)) {
+  checkDuplicateItems(itemName): boolean {
+    console.log(this.userDataSource.value);
+    console.log(this.userDataSource.value.includes(itemName));
+    if (this.userDataSource.value.includes(itemName)) {
       return true;
     } else {
       return false;
@@ -95,8 +98,13 @@ export class ItemService {
     this.userDataSource.value[i].itemQuantity += 1;
   }
   decreaseItemQuantity(i: number) {
+    const value = this.userDataSource.value[i].itemQuantity -= 1;
+    if (value === 0) {
+      //if the value becomes zero delete from the items list
+      this.userDataSource.value.splice(i, 1);
+    }
     console.log(this.userDataSource.value[i]);
-    this.userDataSource.value[i].itemQuantity -= 1;
+
   }
   //check if itemsList is empty
   isEmpty() {
@@ -109,10 +117,5 @@ export class ItemService {
       // FIXME: Implement the search
     });
   }
-  //clears the cart.
-  clear() {
-    this.items = [];
-  }
-
 
 }

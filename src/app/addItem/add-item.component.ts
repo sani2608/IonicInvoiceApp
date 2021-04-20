@@ -22,7 +22,7 @@ export class AddItemComponent implements OnInit {
     private formBuilder: FormBuilder,
     // private toastController: ToastController
 
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //reactive forms
@@ -39,8 +39,15 @@ export class AddItemComponent implements OnInit {
   //     this.service.add(this.itemForm.value);
   // }
   addItem() {
-    this.service.addData(this.itemForm.value);
-}
+    console.log(this.itemForm.value.name);
+
+    if (!this.service.checkDuplicateItems(this.itemForm.value.name)) {
+        this.service.addData(this.itemForm.value);
+    }else{
+      console.log('item already present in cart');
+    }
+
+  }
 
 
 

@@ -11,12 +11,13 @@ import { ItemService } from '../services/item.service';
 export class TotalPage implements OnInit {
   //itemList stores all the items;
   public itemList: Array<Item>;
-  public cartValue = 100;
+  public cartValue: number;
   constructor(private service: ItemService) {}
 
   ngOnInit(): void {
     //?always get updated value from service
-    this.service.userdata.subscribe((data) => (this.itemList = data));
+    this.service.userdata.subscribe(  (data) => (this.itemList = data));
+    this.totalCartValue();
   }
 
   increaseQuantity(i: number) {
@@ -25,10 +26,11 @@ export class TotalPage implements OnInit {
   decreaseQuantity(i: number) {
     this.service.decreaseItemQuantity(i);
   }
-  // totalCartValue() {
-  //   this.cartValue = this.service.totalPrice;
-  //   console.log(this.cartValue);
-  // }
+  totalCartValue() {
+    console.log('before calling');
+    //this.cartValue = this.service.totalCartValue();
+    console.log('After Calling',this.cartValue);
+  }
   isCartEmpty(): boolean {
     return this.service.isEmpty();
   }

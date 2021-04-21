@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { BehaviorSubject } from 'rxjs';
 import { Item } from '../models/item';
 
@@ -6,35 +7,40 @@ import { Item } from '../models/item';
   providedIn: 'root',
 })
 export class ItemService {
-  private items: Array<Item> = [];
-  private userDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject([]);
+  private userDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject(
+    []
+  );
   private userData$ = this.userDataSource.asObservable();
   // private totalCartValue: number;
-  constructor() { }
+  constructor() {}
 
   // updateUserData(data) {
   //   this.userDataSource.next(data);
   // }
-  addData(newItem) {
-    //create a new object
-    const newItemData = new Item();
-    newItemData.itemName = newItem.name;
-    newItemData.itemQuantity = newItem.quantity;
-    newItemData.itemUom = newItem.uom;
-    newItemData.itemPrice = newItem.price;
-    const currentValue = this.userDataSource.value;
-    const updatedValue = [...currentValue, newItemData];
-    this.userDataSource.next(updatedValue);
-    console.log('userDataSource - \n', this.userDataSource.value);
+  addData(newItem: any) {
+    if (this.isItemPresent(newItem.name)) {
+      //TODO add toast to show the message.
+      console.log('duplicate item');
+    } else {
+      //create a new object
+      const newItemData = new Item();
+      newItemData.itemName = newItem.name;
+      newItemData.itemQuantity = newItem.quantity;
+      newItemData.itemUom = newItem.uom;
+      newItemData.itemPrice = newItem.price;
+      const currentValue = this.userDataSource.value;
+      const updatedValue = [...currentValue, newItemData];
+      this.userDataSource.next(updatedValue);
+      console.log(newItem.name, ' is added successfully');
+      console.log('userDataSource - \n', this.userDataSource.value);
+    }
   }
 
   get userdata() {
     return this.userData$;
   }
 
-
-
-  //!Total Cart value.
+  //TODO Total Cart value.
   // totalCartValue(): number{
   // let temporary = 0;
   // const sum = this.userDataSource.value.
@@ -48,12 +54,12 @@ export class ItemService {
   // return sum;
   //}
 
-
   /**
    * @param itemName -is passed to the function
    * @returns - boolean value if item is already present in the list
    */
-  //!is Item present already
+  //?is Item present already (using forEach())
+  //? works as search function also
   isItemPresent(itemName: string): boolean {
     let value: boolean;
     this.userDataSource.value.forEach((element) => {
@@ -65,6 +71,21 @@ export class ItemService {
       }
     });
     return value;
+  }
+  //? search for item using filter()
+  search(itemName: string) {
+    this.userDataSource.value.filter((value) => {
+      if (value.itemName === itemName) {
+        console.log(
+          'item found\ndetails are\n',
+          value.itemName,
+          value.itemPrice,
+          value.itemQuantity,
+          value.itemUom,
+          value.itemTotalPrice
+        );
+      }
+    });
   }
 
   /**
@@ -92,15 +113,5 @@ export class ItemService {
     if (this.userDataSource.value.length === 0) {
       return true;
     }
-  }
-  //!search for item
-  search(itemName: string) {
-    let values: Item;
-    this.userDataSource.value.filter((value) => {
-      // FIXME: Implement the search
-      console.log(value);
-      values= value;
-    });
-    return values;
   }
 }

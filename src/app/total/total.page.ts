@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Item } from '../models/item';
 import { ItemService } from '../services/item.service';
 
@@ -16,7 +15,7 @@ export class TotalPage implements OnInit {
 
   ngOnInit(): void {
     //?always get updated value from service
-    this.service.userdata.subscribe(  (data) => (this.itemList = data));
+    this.service.userdata.subscribe((data) => (this.itemList = data));
     this.totalCartValue();
   }
 
@@ -29,7 +28,7 @@ export class TotalPage implements OnInit {
   totalCartValue() {
     console.log('before calling');
     //this.cartValue = this.service.totalCartValue();
-    console.log('After Calling',this.cartValue);
+    console.log('After Calling', this.cartValue);
   }
   isCartEmpty(): boolean {
     return this.service.isEmpty();

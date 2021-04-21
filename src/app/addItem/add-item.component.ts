@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemService } from '../services/item.service';
 
@@ -8,12 +8,9 @@ import { ItemService } from '../services/item.service';
   styleUrls: ['./add-item.component.scss'],
 })
 export class AddItemComponent implements OnInit {
-
   public itemForm: FormGroup;
-  constructor(
-    private service: ItemService,
-    private formBuilder: FormBuilder,
-  ) { }
+  // public itemNametoSearch;
+  constructor(private service: ItemService, private formBuilder: FormBuilder) {}
   //TODO show message on adding duplicate items
   ngOnInit(): void {
     /**
@@ -23,20 +20,22 @@ export class AddItemComponent implements OnInit {
       name: ['onion', [Validators.required]],
       quantity: [5, [Validators.required]],
       uom: ['kg', [Validators.required]],
-      price: [50, [Validators.required]]
+      price: [50, [Validators.required]],
     });
   }
 
   /**
-   * This method is used to pass form data to service.
+   * This method is used to pass formData to service.
    */
   addItem() {
-    if (this.service.isItemPresent(this.itemForm.value.name)) {
-      console.log('item already present in cart \n Add another Item or Go to Cart...');
-      return;
-    } else {
-      this.service.addData(this.itemForm.value);
-      console.log(this.itemForm.value.name, ' added successfully');
-    }
+    this.service.addData(this.itemForm.value);
+  }
+  /**
+   *
+   * @param itemName is passed to service to check if item is present
+   */
+  searchItem(itemName: string) {
+    this.service.search(itemName);
+    console.log(itemName);
   }
 }

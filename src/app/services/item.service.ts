@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
+import { ToastController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Item } from '../models/item';
-
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
-  private userDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject(
+  //used behaviorsubject because the itemList value is changing frequently and need to show in other components
+  private itemDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject(
     []
   );
-  private userData$ = this.userDataSource.asObservable();
-  // private totalCartValue: number;
-  constructor() {}
+  private itemData$ = this.itemDataSource.asObservable();
+  private cartValue: number;
+  constructor(private toastController: ToastController) {}
 
-  // updateUserData(data) {
-  //   this.userDataSource.next(data);
-  // }
-  addData(newItem: any) {
+  /**
+   *
+   * @param newItem is the formData(item Details) which we get from the add item component.
+   */
+  addData(newItem: any): void {
     if (this.isItemPresent(newItem.name)) {
       //TODO add toast to show the message.
-      console.log('duplicate item');
+      console.log(newItem.name, ' is already added go to cart');
+      this.displayToast( `${newItem.name} is already added go to cart`);
+      return;
     } else {
       //create a new object
       const newItemData = new Item();
@@ -28,90 +31,88 @@ export class ItemService {
       newItemData.itemQuantity = newItem.quantity;
       newItemData.itemUom = newItem.uom;
       newItemData.itemPrice = newItem.price;
-      const currentValue = this.userDataSource.value;
+      const currentValue = this.itemDataSource.value;
       const updatedValue = [...currentValue, newItemData];
-      this.userDataSource.next(updatedValue);
+      this.itemDataSource.next(updatedValue);
+      //TODO toast bar
       console.log(newItem.name, ' is added successfully');
-      console.log('userDataSource - \n', this.userDataSource.value);
+      this.displayToast(`${newItem.name}  added successfully`);
+
     }
   }
-
-  get userdata() {
-    return this.userData$;
+  get totalValue() {
+    return this.cartValue;
   }
 
-  //TODO Total Cart value.
-  // totalCartValue(): number{
-  // let temporary = 0;
-  // const sum = this.userDataSource.value.
-  // forEach(element => {
-  //   temporary += element
-  // });
-  // // reduce(
-  // //   (accumulator, currentValue) =>
-  // //      accumulator + (currentValue.itemQuantity * currentValue.itemPrice), initialValue);
-  // // console.log('this sum is from services', sum);
-  // return sum;
-  //}
+  /**
+   * this is a getter for the itemData to which we can subscribe from other component and get latest values
+   */
+  get userdata() {
+    return this.itemData$;
+  }
 
   /**
-   * @param itemName -is passed to the function
-   * @returns - boolean value if item is already present in the list
+   * @param itemName is passed to the function to check if it is present in the list using filter()
+   * @returns boolean value if item is already present in the list
    */
-  //?is Item present already (using forEach())
-  //? works as search function also
   isItemPresent(itemName: string): boolean {
     let value: boolean;
-    this.userDataSource.value.forEach((element) => {
+    this.itemDataSource.value.filter((element) => {
       if (element.itemName === itemName) {
         value = true;
-      } else {
-        console.log('Item is not present');
-        value = false;
+        return value;
       }
     });
     return value;
   }
-  //? search for item using filter()
-  search(itemName: string) {
-    this.userDataSource.value.filter((value) => {
-      if (value.itemName === itemName) {
-        console.log(
-          'item found\ndetails are\n',
-          value.itemName,
-          value.itemPrice,
-          value.itemQuantity,
-          value.itemUom,
-          value.itemTotalPrice
-        );
-      }
-    });
-  }
-
   /**
    * @param i is the position of the item.
    */
   increaseItemQuantity(i: number) {
-    this.userDataSource.value[i].itemQuantity += 1;
+    this.itemDataSource.value[i].itemQuantity += 1;
   }
   /**
    *
-   * @param i is the position of the item. If it is zero delete te item from the list
+   * @param i is the position of the item. If it is zero delete the item from the list.
+   * if the item quantity becomes zero it will delete that item from the cart
    */
   decreaseItemQuantity(i: number) {
-    const value = (this.userDataSource.value[i].itemQuantity -= 1);
+    const value = (this.itemDataSource.value[i].itemQuantity -= 1);
     if (value === 0) {
-      //if the value becomes zero delete from the items list
-      //delete at i only 1 element
-      this.userDataSource.value.splice(i, 1);
+      this.itemDataSource.value.splice(i, 1);
     }
   }
   /**
    * @returns true or false if cart is empty
    */
   isEmpty(): boolean {
-    if (this.userDataSource.value.length === 0) {
+    if (this.itemDataSource.value.length === 0) {
       return true;
     }
+  }
+  //TODO Total Cart value.
+  totalCartValue() {
+    const initialValue = 0;
+    const sum = this.itemDataSource.value.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.itemTotalPrice,
+      initialValue
+    );
+    this.cartValue = sum;
+    // return sum;
+  }
+  /**
+   * Display toas on top of the screen
+   */
+  displayToast(message: string) {
+    this.toastController
+      .create({
+        message,
+        position: 'top',
+        duration: 1000,
+        color: 'primary',
+      })
+      .then((toast) => {
+        toast.present();
+      });
   }
 }

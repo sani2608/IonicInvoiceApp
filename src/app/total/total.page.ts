@@ -18,17 +18,17 @@ export class TotalPage implements OnInit {
     this.service.userdata.subscribe((data) => (this.itemList = data));
     this.totalCartValue();
   }
-
   increaseQuantity(i: number) {
     this.service.increaseItemQuantity(i);
+    this.totalCartValue();
   }
   decreaseQuantity(i: number) {
     this.service.decreaseItemQuantity(i);
+    this.totalCartValue();
   }
   totalCartValue() {
-    console.log('before calling');
-    //this.cartValue = this.service.totalCartValue();
-    console.log('After Calling', this.cartValue);
+    console.log('calculated cart value....', this.service.totalValue);
+    this.cartValue = this.service.totalValue;
   }
   isCartEmpty(): boolean {
     return this.service.isEmpty();

@@ -30,12 +30,4 @@ export class AddItemComponent implements OnInit {
   addItem() {
     this.service.addData(this.itemForm.value);
   }
-  /**
-   *
-   * @param itemName is passed to service to check if item is present
-   */
-  searchItem(itemName: string) {
-    this.service.search(itemName);
-    console.log(itemName);
-  }
 }

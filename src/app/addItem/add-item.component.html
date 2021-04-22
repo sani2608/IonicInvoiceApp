@@ -8,7 +8,7 @@
             <ion-card-header>
               <ion-card-title> Add Item to Cart </ion-card-title>
             </ion-card-header>
-            <form [formGroup]="itemForm" (ngSubmit)="addItem()">
+            <form [formGroup]="formData" (ngSubmit)="addItem()">
               <ion-card-content>
                 <!-- *item name -->
                 <ion-item>
@@ -69,7 +69,7 @@
                       <ion-button
                         expand="block"
                         type="submit"
-                        [disabled]="!itemForm.valid"
+                        [disabled]="!formData.valid"
                       >
                         <ion-icon slot="end" name="add-outline"></ion-icon>
                         Add Item

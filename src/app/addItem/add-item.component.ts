@@ -8,7 +8,7 @@ import { ItemService } from '../services/item.service';
   styleUrls: ['./add-item.component.scss'],
 })
 export class AddItemComponent implements OnInit {
-  public itemForm: FormGroup;
+  private itemForm: FormGroup;
   constructor(private service: ItemService, private formBuilder: FormBuilder) {}
   ngOnInit(): void {
     /**
@@ -20,6 +20,9 @@ export class AddItemComponent implements OnInit {
       uom: ['kg', [Validators.required]],
       price: [50, [Validators.required]],
     });
+  }
+  get formData() {
+    return this.itemForm;
   }
 
   /**

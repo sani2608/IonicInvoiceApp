@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../models/item';
 @Injectable({
   providedIn: 'root',
 })
 export class ItemService {
-  //used behaviorsubject because the itemList value is changing frequently and need to show in other components
+  //used behaviorsubject because the itemList value is changing frequently and need to show in other component
   private itemDataSource: BehaviorSubject<Array<Item>> = new BehaviorSubject(
     []
   );
@@ -25,7 +25,7 @@ export class ItemService {
       this.displayToast(`${newItem.name} is already added go to cart`);
       return;
     } else {
-      //create a new object
+      //create a new object and use setters to assign values.
       const newItemData = new Item();
       newItemData.itemName = newItem.name;
       newItemData.itemQuantity = newItem.quantity;
@@ -41,7 +41,7 @@ export class ItemService {
   /**
    * this is a getter for the itemData to which we can subscribe from other component and get latest values
    */
-  get userdata() {
+  get userdata(): Observable<Item[]> {
     return this.itemData$;
   }
 
@@ -62,7 +62,7 @@ export class ItemService {
   /**
    * @param i is the position of the item.
    */
-  increaseItemQuantity(i: number) {
+  increaseItemQuantity(i: number): void {
     this.itemDataSource.value[i].itemQuantity += 1;
     this.totalCartValue();
   }
@@ -71,9 +71,12 @@ export class ItemService {
    * @param i is the position of the item. If it is zero delete the item from the list.
    * if the item quantity becomes zero it will delete that item from the cart
    */
-  decreaseItemQuantity(i: number) {
+  decreaseItemQuantity(i: number): void {
     const value = (this.itemDataSource.value[i].itemQuantity -= 1);
     if (value === 0) {
+      this.displayToast(
+        `${this.itemDataSource.value[i].itemName} removed from cart`
+      );
       this.itemDataSource.value.splice(i, 1);
     }
     this.totalCartValue();
@@ -86,28 +89,24 @@ export class ItemService {
       return true;
     }
   }
-  //TODO Total Cart value.
-  totalCartValue() {
-    const initialValue = 0;
+  /**
+   * Calculates the total Cart value using reduce()
+   */
+  totalCartValue(): void {
     const sum = this.itemDataSource.value.reduce(
       (accumulator, currentValue) => accumulator + currentValue.itemTotalPrice,
-      initialValue
+      0
     );
-    // console.log('sum is ',sum);
-
     this.cartValue.next(sum);
-    // console.log('behavioural subject  ',this.cartValue.value);
-    // this.cartValue = sum;
-    // return sum;
   }
-  get totalValue() {
+  get totalValue(): Observable<number> {
     return this.cartData$;
   }
 
   /**
    * Display toas on top of the screen
    */
-  displayToast(message: string) {
+  displayToast(message: string): void {
     this.toastController
       .create({
         message,

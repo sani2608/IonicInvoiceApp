@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="cart-items">
-    <ion-card mode="ios" *ngFor="let item of itemList; let i = index">
+    <ion-card mode="ios" *ngFor="let item of listOfItems | async; let i = index">
       <ion-card-content>
         <div class="item-img">
           <img
@@ -42,7 +42,8 @@
     <ion-item lines="none">
       <ion-label>Total</ion-label>
       <ion-label slot="end" class="ion-text-right"
-        >₹ {{ cartVal }}/-</ion-label>
+        >₹ {{ cartVal|async}}/-</ion-label>
+        <!-- advantage of using async pipe is that it will automatically unsubscribe -->
     </ion-item>
   </div>
 </ion-content>

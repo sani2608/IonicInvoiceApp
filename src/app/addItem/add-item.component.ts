@@ -25,7 +25,7 @@ export class AddItemComponent implements OnInit {
   /**
    * This method is used to pass formData to service.
    */
-  addItem() {
+  addItem(): void {
     this.service.addData(this.itemForm.value);
   }
 }

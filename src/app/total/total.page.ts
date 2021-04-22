@@ -16,21 +16,23 @@ export class TotalPage implements OnInit {
   ngOnInit(): void {
     //?always get updated value from service
     this.service.userdata.subscribe((data) => (this.itemList = data));
-    this.totalCartValue();
+    this.service.totalValue.subscribe(data => this.cartValue = data);
   }
   increaseQuantity(i: number) {
     this.service.increaseItemQuantity(i);
-    this.totalCartValue();
   }
   decreaseQuantity(i: number) {
     this.service.decreaseItemQuantity(i);
-    this.totalCartValue();
   }
-  totalCartValue() {
-    console.log('calculated cart value....', this.service.totalValue);
-    this.cartValue = this.service.totalValue;
-  }
+  //TODO cart value fix
+  // totalCartValue() {
+  //   console.log('calculated cart value....', this.service.totalValue);
+  //   this.cartValue = this.service.totalValue;
+  // }
   isCartEmpty(): boolean {
     return this.service.isEmpty();
+  }
+  get cartVal() {
+    return this.cartValue;
   }
 }

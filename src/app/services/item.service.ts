@@ -11,7 +11,9 @@ export class ItemService {
     []
   );
   private itemData$ = this.itemDataSource.asObservable();
-  private cartValue: number;
+  //this is for calculation of total cart value
+  private cartValue: BehaviorSubject<number> = new BehaviorSubject(0);
+  private cartData$ = this.cartValue.asObservable();
   constructor(private toastController: ToastController) {}
 
   /**
@@ -20,9 +22,7 @@ export class ItemService {
    */
   addData(newItem: any): void {
     if (this.isItemPresent(newItem.name)) {
-      //TODO add toast to show the message.
-      console.log(newItem.name, ' is already added go to cart');
-      this.displayToast( `${newItem.name} is already added go to cart`);
+      this.displayToast(`${newItem.name} is already added go to cart`);
       return;
     } else {
       //create a new object
@@ -34,16 +34,10 @@ export class ItemService {
       const currentValue = this.itemDataSource.value;
       const updatedValue = [...currentValue, newItemData];
       this.itemDataSource.next(updatedValue);
-      //TODO toast bar
-      console.log(newItem.name, ' is added successfully');
       this.displayToast(`${newItem.name}  added successfully`);
-
+      this.totalCartValue();
     }
   }
-  get totalValue() {
-    return this.cartValue;
-  }
-
   /**
    * this is a getter for the itemData to which we can subscribe from other component and get latest values
    */
@@ -70,6 +64,7 @@ export class ItemService {
    */
   increaseItemQuantity(i: number) {
     this.itemDataSource.value[i].itemQuantity += 1;
+    this.totalCartValue();
   }
   /**
    *
@@ -81,6 +76,7 @@ export class ItemService {
     if (value === 0) {
       this.itemDataSource.value.splice(i, 1);
     }
+    this.totalCartValue();
   }
   /**
    * @returns true or false if cart is empty
@@ -97,9 +93,17 @@ export class ItemService {
       (accumulator, currentValue) => accumulator + currentValue.itemTotalPrice,
       initialValue
     );
-    this.cartValue = sum;
+    // console.log('sum is ',sum);
+
+    this.cartValue.next(sum);
+    // console.log('behavioural subject  ',this.cartValue.value);
+    // this.cartValue = sum;
     // return sum;
   }
+  get totalValue() {
+    return this.cartData$;
+  }
+
   /**
    * Display toas on top of the screen
    */

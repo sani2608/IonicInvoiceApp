@@ -9,9 +9,7 @@ import { ItemService } from '../services/item.service';
 })
 export class AddItemComponent implements OnInit {
   public itemForm: FormGroup;
-  // public itemNametoSearch;
   constructor(private service: ItemService, private formBuilder: FormBuilder) {}
-  //TODO show message on adding duplicate items
   ngOnInit(): void {
     /**
      * Reactive Form

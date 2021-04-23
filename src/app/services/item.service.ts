@@ -23,7 +23,7 @@ export class ItemService {
    */
   addData(newItem: any): void {
     const newItemData = new Item();
-    newItemData.itemName = newItem.name.toLocaleLowerCase();
+    newItemData.itemName = newItem.name.toLowerCase();
     newItemData.itemQuantity = newItem.quantity;
     newItemData.itemUom = newItem.uom;
     newItemData.itemPrice = newItem.price;
@@ -46,7 +46,7 @@ export class ItemService {
   isItemPresent(itemName: string): boolean {
     let value: boolean;
     this.itemDataSource.value.filter((element) => {
-      if (element.itemName === itemName.toLocaleLowerCase()) {
+      if (element.itemName === itemName.toLowerCase()) {
         value = true;
         return value;
       }

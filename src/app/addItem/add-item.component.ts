@@ -34,6 +34,15 @@ export class AddItemComponent implements OnInit {
    * This method is used to pass formData to service.
    */
   addItem(): void {
-    this.service.addData(this.itemForm.value);
+    if (!this.service.isItemPresent(this.itemForm.value.name)) {
+      this.service.addData(this.itemForm.value);
+      this.toast.displayToast(
+        `${this.itemForm.value.name} added successfully.`
+      );
+    } else {
+      this.toast.displayToast(
+        `${this.itemForm.value.name} already added in cart goto cart.`
+      );
+    }
   }
 }

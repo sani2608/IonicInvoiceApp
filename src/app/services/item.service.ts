@@ -22,27 +22,19 @@ export class ItemService {
 
   /**
    *
-   * @param newItem is the formData(item Details) which we get from the add item component.
+   * @param newItem is the formData(item Details) object which we get from the add  item component.
+   *we create a new object and use setters to assign values.
    */
   addData(newItem: any): void {
-    if (this.isItemPresent(newItem.name)) {
-      this.toastCtrl.displayToast(
-        `${newItem.name} is already added go to cart`
-      );
-      return;
-    } else {
-      //create a new object and use setters to assign values.
-      const newItemData = new Item();
-      newItemData.itemName = newItem.name.toLocaleLowerCase();
-      newItemData.itemQuantity = newItem.quantity;
-      newItemData.itemUom = newItem.uom;
-      newItemData.itemPrice = newItem.price;
-      const currentValue = this.itemDataSource.value;
-      const updatedValue = [...currentValue, newItemData];
-      this.itemDataSource.next(updatedValue);
-      this.toastCtrl.displayToast(`${newItem.name}  added successfully`);
-      this.totalCartValue();
-    }
+    const newItemData = new Item();
+    newItemData.itemName = newItem.name.toLocaleLowerCase();
+    newItemData.itemQuantity = newItem.quantity;
+    newItemData.itemUom = newItem.uom;
+    newItemData.itemPrice = newItem.price;
+    const currentValue = this.itemDataSource.value;
+    const updatedValue = [...currentValue, newItemData];
+    this.itemDataSource.next(updatedValue);
+    this.totalCartValue();
   }
   /**
    * this is a getter for the itemData to which we can subscribe from other component and get latest values

@@ -3,9 +3,12 @@ import { ToastController } from '@ionic/angular';
 
 @NgModule({})
 export class ToastExample {
-  private isToastPresent = false;
+  private isToastPresent = false; //prevent multiple toast bar
   constructor(public toastController: ToastController) {}
-
+  /**
+   *
+   * @param message pass message accordingly
+   */
   async displayToast(message: string) {
     if (!this.isToastPresent) {
       this.isToastPresent = true;

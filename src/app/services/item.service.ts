@@ -71,9 +71,9 @@ export class ItemService {
   }
   /**
    *
-   * @param i will remove item from cart
+   * @param i will remove item from cart on ith position.
    */
-  removeItemFromCart(i: number) {
+  removeItemFromCart(i: number): void {
     this.itemDataSource.value.splice(i, 1);
   }
   /**

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../models/item';
 import { ToastExample } from '../shared/toast';
@@ -16,7 +15,6 @@ export class ItemService {
   private cartValue: BehaviorSubject<number> = new BehaviorSubject(0);
   private cartData$ = this.cartValue.asObservable();
   constructor(
-    private toastController: ToastController,
     private toastCtrl: ToastExample
   ) {}
 

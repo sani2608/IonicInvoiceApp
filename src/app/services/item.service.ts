@@ -14,7 +14,7 @@ export class ItemService {
   //this is for calculation of total cart value
   private cartValue: BehaviorSubject<number> = new BehaviorSubject(0);
   private cartData$ = this.cartValue.asObservable();
-  constructor(private toastCtrl: ToastExample) {}
+  constructor() {}
 
   /**
    *

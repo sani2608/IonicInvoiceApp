@@ -18,7 +18,7 @@ export class Item {
   }
   set itemQuantity(quantity: number) {
     this.quantity = quantity;
-    this.totalPrice = this.quantity * this.price;
+   // this.totalPrice = this.quantity * this.price;
   }
 
   get itemUom(): string {
@@ -33,7 +33,7 @@ export class Item {
   }
   set itemPrice(price: number) {
     this.price = price;
-    this.totalPrice = this.quantity * this.price;
+   // this.totalPrice = this.quantity * this.price;
   }
 
   get itemTotalPrice(): number {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemService } from '../services/item.service';
+import { ToastExample } from '../shared/toast';
 
 @Component({
   selector: 'app-additem-component',
@@ -9,7 +10,11 @@ import { ItemService } from '../services/item.service';
 })
 export class AddItemComponent implements OnInit {
   private itemForm: FormGroup;
-  constructor(private service: ItemService, private formBuilder: FormBuilder) {}
+  constructor(
+    private service: ItemService,
+    private formBuilder: FormBuilder,
+    private toast: ToastExample
+  ) {}
   ngOnInit(): void {
     /**
      * Reactive Form

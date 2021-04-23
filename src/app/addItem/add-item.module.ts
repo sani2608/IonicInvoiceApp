@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AddItemComponent } from './add-item.component';
 
 @NgModule({
-  imports: [ CommonModule, ReactiveFormsModule, IonicModule],
+  imports: [CommonModule, ReactiveFormsModule, IonicModule],
   declarations: [AddItemComponent],
-  exports: [AddItemComponent]
+  exports: [AddItemComponent],
 })
 export class AddItemComponentModule {}

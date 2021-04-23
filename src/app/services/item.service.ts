@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Item } from '../models/item';
+import { ToastExample } from '../shared/toast';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +15,10 @@ export class ItemService {
   //this is for calculation of total cart value
   private cartValue: BehaviorSubject<number> = new BehaviorSubject(0);
   private cartData$ = this.cartValue.asObservable();
-  constructor(private toastController: ToastController) {}
+  constructor(
+    private toastController: ToastController,
+    private toastCtrl: ToastExample
+  ) {}
 
   /**
    *
@@ -22,19 +26,21 @@ export class ItemService {
    */
   addData(newItem: any): void {
     if (this.isItemPresent(newItem.name)) {
-      this.displayToast(`${newItem.name} is already added go to cart`);
+      this.toastCtrl.displayToast(
+        `${newItem.name} is already added go to cart`
+      );
       return;
     } else {
       //create a new object and use setters to assign values.
       const newItemData = new Item();
-      newItemData.itemName = newItem.name;
+      newItemData.itemName = newItem.name.toLocaleLowerCase();
       newItemData.itemQuantity = newItem.quantity;
       newItemData.itemUom = newItem.uom;
       newItemData.itemPrice = newItem.price;
       const currentValue = this.itemDataSource.value;
       const updatedValue = [...currentValue, newItemData];
       this.itemDataSource.next(updatedValue);
-      this.displayToast(`${newItem.name}  added successfully`);
+      this.toastCtrl.displayToast(`${newItem.name}  added successfully`);
       this.totalCartValue();
     }
   }
@@ -52,7 +58,7 @@ export class ItemService {
   isItemPresent(itemName: string): boolean {
     let value: boolean;
     this.itemDataSource.value.filter((element) => {
-      if (element.itemName === itemName) {
+      if (element.itemName === itemName.toLocaleLowerCase()) {
         value = true;
         return value;
       }
@@ -74,7 +80,7 @@ export class ItemService {
   decreaseItemQuantity(i: number): void {
     const value = (this.itemDataSource.value[i].itemQuantity -= 1);
     if (value === 0) {
-      this.displayToast(
+      this.toastCtrl.displayToast(
         `${this.itemDataSource.value[i].itemName} removed from cart`
       );
       this.itemDataSource.value.splice(i, 1);
@@ -101,21 +107,5 @@ export class ItemService {
   }
   get totalValue(): Observable<number> {
     return this.cartData$;
-  }
-
-  /**
-   * Display toas on top of the screen
-   */
-  displayToast(message: string): void {
-    this.toastController
-      .create({
-        message,
-        position: 'top',
-        duration: 1000,
-        color: 'primary',
-      })
-      .then((toast) => {
-        toast.present();
-      });
   }
 }

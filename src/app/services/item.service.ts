@@ -22,11 +22,11 @@ export class ItemService {
    *we create a new object and use setters to assign values.
    */
   addData(newItem: any): void {
-    const newItemData = new Item();
-    newItemData.itemName = newItem.name.toLowerCase();
-    newItemData.itemQuantity = newItem.quantity;
-    newItemData.itemUom = newItem.uom;
-    newItemData.itemPrice = newItem.price;
+    const newItemData = new Item(newItem.name.toLowerCase(), newItem.quantity, newItem.uom, newItem.price);
+    // newItemData.itemName = newItem.name.toLowerCase();
+    // newItemData.itemQuantity = newItem.quantity;
+    // newItemData.itemUom = newItem.uom;
+    // newItemData.itemPrice = newItem.price;
     const currentValue = this.itemDataSource.value;
     const updatedValue = [...currentValue, newItemData];
     this.itemDataSource.next(updatedValue);

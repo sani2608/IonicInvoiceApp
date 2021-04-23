@@ -4,7 +4,12 @@ export class Item {
   private uom: string;
   private price: number;
   private totalPrice: number;
-  constructor() {}
+  constructor(name: string, quantity: number, uom: string, price: number) {
+    this.name = name;
+    this.quantity = quantity;
+    this.uom = uom;
+    this.price = price;
+  }
 
   get itemName(): string {
     return this.name;

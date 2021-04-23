@@ -14,9 +14,7 @@ export class ItemService {
   //this is for calculation of total cart value
   private cartValue: BehaviorSubject<number> = new BehaviorSubject(0);
   private cartData$ = this.cartValue.asObservable();
-  constructor(
-    private toastCtrl: ToastExample
-  ) {}
+  constructor(private toastCtrl: ToastExample) {}
 
   /**
    *
@@ -68,14 +66,30 @@ export class ItemService {
    * if the item quantity becomes zero it will delete that item from the cart
    */
   decreaseItemQuantity(i: number): void {
-    const value = (this.itemDataSource.value[i].itemQuantity -= 1);
-    if (value === 0) {
-      this.toastCtrl.displayToast(
-        `${this.itemDataSource.value[i].itemName} removed from cart`
-      );
-      this.itemDataSource.value.splice(i, 1);
-    }
+    this.itemDataSource.value[i].itemQuantity -= 1;
     this.totalCartValue();
+  }
+  /**
+   *
+   * @param i will remove item from cart
+   */
+  removeItemFromCart(i: number) {
+    this.itemDataSource.value.splice(i, 1);
+  }
+  /**
+   *
+   * @param i check if itemQuantity is equal to zero
+   * @returns boolean value
+   */
+  isItemLengthZero(i: number): boolean {
+    const value = this.itemDataSource.value[i].itemQuantity;
+    return value === 0 ? true : false;
+  }
+  /**
+   * returns itemData list
+   */
+  get dataSource() {
+    return this.itemDataSource;
   }
   /**
    * @returns true or false if cart is empty
